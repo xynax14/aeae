@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебя</title>
+    <style>
+        /* Фон с анимацией */
+        body {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 300% 300%;
+            animation: backgroundAnimation 10s infinite alternate;
+            font-family: "Arial", sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* Заголовки */
+        h1 {
+            color: white;
+            font-size: 3em;
+            margin-top: 50px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+        h2 {
+            color: white;
+            font-size: 2em;
+            margin-top: 10px;
+            opacity: 0.9;
+            animation: fadeIn 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px white; }
+            100% { text-shadow: 0 0 15px white; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Сердечки */
+        .heart {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 4s infinite ease-in-out;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before { top: -25px; left: 0; }
+        .heart::after { top: 0; left: 25px; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
+            50% { transform: translateY(-100px) rotate(-45deg); opacity: 0.5; }
+            100% { transform: translateY(-200px) rotate(-45deg); opacity: 0; }
+        }
+
+        /* Лепестки роз */
+        .petal {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: pink;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Кнопки */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+        button:hover {
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ты у меня самая лучшая!</h1>
+    <h2>Ты словно звезда, освещающая мою жизнь.</h2>
+
+    <button onclick="showHearts()">Пусть летят сердечки ❤️</button>
+    <button onclick="toggleMusic()">🎵 Включить/Выключить музыку</button>
+
+    <!-- Музыкальный плеер -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+        Ваш браузер не поддерживает аудиоплеер.
+    </audio>
+
+    <script>
+        // Функция для показа сердечек
+        function showHearts() {
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                document.body.appendChild(heart);
+
+                let x = Math.random() * window.innerWidth;
+                let y = window.innerHeight;
+
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+setTimeout(() => { heart.remove(); }, 4000);
+            }
+        }
+
+        // Функция для создания лепестков роз
+        function createPetals() {
+            for (let i = 0; i < 15; i++) {
+                let petal = document.createElement("div");
+                petal.classList.add("petal");
+                document.body.appendChild(petal);
+
+                let x = Math.random() * window.innerWidth;
+                let duration = Math.random() * 5 + 5;
+
+                petal.style.left = x + "px";
+                petal.style.animationDuration = duration + "s";
+                petal.style.animationDelay = Math.random() * 5 + "s";
+
+                setTimeout(() => { petal.remove(); }, duration * 1000);
+            }
+        }
+
+        setInterval(createPetals, 2000);
+
+        // Функция для управления музыкой
+        let music = document.getElementById("backgroundMusic");
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+</body>
+</html>
